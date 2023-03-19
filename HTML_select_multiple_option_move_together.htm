@@ -29,8 +29,25 @@
 		select_option_move_down("leftID");
 	}
 
+/*
+超開心，我剛剛洗澡的時候想到，今天要解將select選單，有選項目往上「↑」移動的寫法了
+
+假設項目有N個
+檢查N-1次(最後一個不檢查無條件移動)
+
+判斷方法每次都判斷：
+自己[0]
+下一個[1]
+
+當下一個[1]是被選擇時：(if)※出現bug補充條件自己[0]也(&&)不是被選時才可超越
+移動下一個[1]到最尾巴
+反向不是被選擇時：(else)
+移動自己[0]到最尾巴
+*/
 	
 	function select_option_move_up(select_id){
+	//參考資料 HTML+JS实现左边select移动到右边select_勇勇米的博客-CSDN博客
+	//https://blog.csdn.net/weixin_41903771/article/details/83004130
 		var selectElement = document.getElementById(select_id) ;
 		var optionElements = selectElement.getElementsByTagName("option") ;
 		for(var i=0;i<optionElements.length-1;i++) {//檢查N-1次
@@ -42,6 +59,8 @@
 		}
 		document.getElementById(select_id).appendChild(optionElements[0]) ;//最後一個不檢查無條件移動
 	}
+	
+	//開心 選項 往下移動↓ 也完成了
 	
 	function select_option_move_down(select_id){
 	//參考資料 支援將option排序到最前頭(首項)語法insertBefore與firstChild
