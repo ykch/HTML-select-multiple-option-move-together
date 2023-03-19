@@ -1,0 +1,62 @@
+<div id="" style="position: absolute;left: 10px;top: 20px;">
+	<select style="width: 70px;" id="leftID" size="10" multiple="multiple" >
+		<option value="">A</option>
+		<option value="">B</option>
+		<option value="">C</option>
+		<option value="">D</option>
+		<option value="">E</option>
+		<option value="">F</option>
+		<option value="">G</option>
+		<option value="">H</option>
+		<option value="">I</option>
+		<option value="">J</option>
+	</select>
+</div>
+<div id="" style="position: absolute;left: 100px;top: 60px;">
+	<input type="button" name="move_up_btn" id="move_up_btn" value="↑往上移動↑" />		
+</div>
+<div id="" style="position: absolute;left: 100px;top: 90px;">
+	<input type="button" name="move_down_btn" id="move_down_btn" value="↓往下移動↓" />		
+</div>
+
+<script type="text/javascript">
+
+	document.getElementById("move_up_btn").onclick = function(){
+		select_option_move_up("leftID");
+	}
+	
+	document.getElementById("move_down_btn").onclick = function() {
+		select_option_move_down("leftID");
+	}
+
+	
+	function select_option_move_up(select_id){
+		var selectElement = document.getElementById(select_id) ;
+		var optionElements = selectElement.getElementsByTagName("option") ;
+		for(var i=0;i<optionElements.length-1;i++) {//檢查N-1次
+			if((optionElements[1].selected == true)&&(optionElements[0].selected == false)) {//當下一個[1]是被選擇時：(if)※出現bug補充條件自己[0]也(&&)不是被選時才可超越
+				document.getElementById(select_id).appendChild(optionElements[1]) ;//移動下一個[1]到最尾巴		
+			}else{//反向不是被選擇時：(else)
+				document.getElementById(select_id).appendChild(optionElements[0]) ;//移動自己[0]到最尾巴
+			}
+		}
+		document.getElementById(select_id).appendChild(optionElements[0]) ;//最後一個不檢查無條件移動
+	}
+	
+	function select_option_move_down(select_id){
+	//參考資料 支援將option排序到最前頭(首項)語法insertBefore與firstChild
+	//select - jQuery add blank option to top of list and make selected to existing dropdown - Stack Overflow
+	//https://stackoverflow.com/a/32741840
+	//HTML DOM insertBefore() Method https://www.w3schools.com/Jsref/met_node_insertbefore.asp
+		var selectElement = document.getElementById(select_id) ;
+		var optionElements = selectElement.getElementsByTagName("option") ;
+		for(var i=0;i<optionElements.length-1;i++) {//檢查N-1次
+			if((optionElements[optionElements.length-2].selected == true)&&(optionElements[optionElements.length-1].selected == false)) {//當上一個[End-1]是被選擇時：(if)※出現bug補充條件自己[End]也(&&)不是被選時才可超越
+				document.getElementById(select_id).insertBefore(optionElements[optionElements.length-2], document.getElementById(select_id).firstChild);//移動上一個[End-1]到最前頭(首項)
+			}else{//反向不是被選擇時：(else)
+				document.getElementById(select_id).insertBefore(optionElements[optionElements.length-1], document.getElementById(select_id).firstChild);//移動自己[End]到最前頭(首項)
+			}
+		}
+		document.getElementById(select_id).insertBefore(optionElements[optionElements.length-1], document.getElementById(select_id).firstChild);//最後一個不檢查無條件移動
+	}
+</script>
